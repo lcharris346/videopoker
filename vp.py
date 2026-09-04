@@ -68,7 +68,7 @@ VALUETABLE["tdb"] = {" rf": 4000, " sf":  250,
                      " fh":   40, " fl":   25, "str":  20, "3ok":  10, "2pr":   5, "job": 5, " hc": 0}
 
 VALUETABLE["dw"] = {" rf":  4000, " sf":  45, 
-                    " q2":  1000, "wrf":  125, "5ok": 75,
+                    " q2":  1000, "wrf":  100, "5ok": 75,
                     "qak":   25, " qa":  25, "qlk":   25, " ql":   25, "  q":  25,
                     " fh":   20, " fl":   15,  "str":  10, "3ok":   5, "2pr":   0, "job": 0, " hc": 0}
 
@@ -157,13 +157,13 @@ Deuces WildFull Pay (25/15/9/5/3)100.76%25.702.54Medium
 """
 
 BONUS_TYPES   = {
-                    "job": {"rtp": 99.54, "var": 19.51,  "cov": 1.97}, 
-                      "b": {"rtp": 99.17, "var": 20.91,  "cov": 2.08}, 
-                     "bd": {"rtp": 98.49, "var": 32.13,  "cov": 2.21},
-                     "db": {"rtp": 98.49, "var": 28.26,  "cov": 2.33}, 
-                    "ddb": {"rtp": 98.49, "var": 41.90,  "cov": 4.15}, 
-                    "tdb": {"rtp": 98.15, "var": 98.30,  "cov": 9.72}, 
-                     "dw": {"rtp": 97.06, "var": 25.80,  "cov": 2.54}
+                    "job": {"rtp": 99.54, "var": 19.51,  "cov": 1.97, "target": " fh"}, 
+                      "b": {"rtp": 99.17, "var": 20.91,  "cov": 2.08, "target": " fh"}, 
+                     "bd": {"rtp": 98.49, "var": 32.13,  "cov": 2.21, "target": "  q"},
+                     "db": {"rtp": 98.49, "var": 28.26,  "cov": 2.33, "target": "  q"}, 
+                    "ddb": {"rtp": 98.49, "var": 41.90,  "cov": 4.15, "target": "  q"}, 
+                    "tdb": {"rtp": 98.15, "var": 98.30,  "cov": 9.72, "target": "  q"}, 
+                     "dw": {"rtp": 97.06, "var": 25.80,  "cov": 2.54, "target": " sf"}
                 }
 
 # Functions
@@ -1723,10 +1723,8 @@ def main(args):
 
     # Update threshold if 0
     if args.threshold == 0:
-        if args.addition_type == "dw":
-            args.threshold = VALUETABLE[args.addition_type]["5ok"] * args.denom
-        else:
-            args.threshold = VALUETABLE[args.addition_type]["  q"] * args.denom
+        target_hand = BONUS_TYPES[args.addition_type]["target"]
+        args.threshold = VALUETABLE[args.addition_type][target_hand] * args.denom
         print("INFO. Updated Threshold to 5ok or quads", args.threshold)
 
     # tests
@@ -1821,7 +1819,7 @@ def main(args):
 # Command-line Execution
 if __name__=="__main__":
     #args
-    parser = argparse.ArgumentParser(description="vp")
+    parser = argparse.ArgumentParser(description="Video-Poker")
     parser.add_argument("-c", "--credit", type=float, default=0, help="credit")
     parser.add_argument("-d", "--denom", type=float, default=0.1, help="denom")
     parser.add_argument("-g", "--activity", default="fhpw", help="activity:cl,sptrp,stp,dstp,sstk,pstk,php,ultx,fhpw,majm,drmcd")

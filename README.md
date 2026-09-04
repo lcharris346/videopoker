@@ -1,8 +1,6 @@
 # vp.py
 usage: python vp.py [-h] [-c CREDIT] [-d DENOM] [-g ACTIVITY] [-n NUM_SETS] [-b ADDITION_TYPE] [-i ITERATIONS] [-a] [-v] [-p] [-t] [-th THRESHOLD] [-o ODDS]
 
-vp
-
 options:
   -h, --help            show this help message and exit
   -c CREDIT, --credit CREDIT
@@ -42,4 +40,6 @@ Volatility Buffer: $ 11093.60
 Required Bankroll: $ 11876.60
 ========================================
 
+# target-bankroll
+sheet that calculates target-bankroll based on expected loss and volatility buffer
 
